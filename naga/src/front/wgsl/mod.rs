@@ -4,10 +4,10 @@ Frontend for [WGSL][wgsl] (WebGPU Shading Language).
 [wgsl]: https://gpuweb.github.io/gpuweb/wgsl.html
 */
 
-mod error;
+pub mod error;
 mod index;
 mod lower;
-mod parse;
+pub mod parse;
 #[cfg(test)]
 mod tests;
 mod to_wgsl;
