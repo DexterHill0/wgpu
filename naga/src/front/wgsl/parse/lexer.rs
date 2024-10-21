@@ -297,6 +297,21 @@ impl<'a> Lexer<'a> {
         }
     }
 
+    /// Return the next token from `self`, including whitespace.
+    ///
+    /// Assume we are a parse state where bit shift operators may
+    /// occur, but not angle brackets.
+    pub fn next_raw(&mut self) -> TokenSpan<'a> {
+        let start_byte_offset = self.current_byte_offset();
+
+        let (token, rest) = consume_token(self.input, false);
+        self.input = rest;
+
+        self.last_end_offset = self.current_byte_offset();
+
+        return (token, self.span_from(start_byte_offset));
+    }
+
     #[must_use]
     pub fn peek(&mut self) -> TokenSpan<'a> {
         let (token, _) = self.peek_token_and_rest();
